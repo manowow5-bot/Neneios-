@@ -551,12 +551,43 @@
             gap: 30px;
         }
 
+        .product-frame {
+            position: relative;
+            border-radius: 17px;
+            padding: 2px;
+            overflow: hidden;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .product-frame::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                transparent 320deg,
+                rgba(0, 170, 255, 0.35) 335deg,
+                #00aaff 348deg,
+                #66d9ff 354deg,
+                #ffffff 357deg,
+                transparent 360deg
+            );
+            animation: raysSpin 3s linear infinite;
+            transform: translate(-50%, -50%) rotate(0deg);
+            z-index: 0;
+        }
+
         .product {
             background: linear-gradient(145deg, #004488, #0066cc);
             padding: 20px;
             border-radius: 15px;
             text-align: center;
-            border: 2px solid #00aaff;
+            border: none;
             box-shadow: 0 10px 30px rgba(0, 170, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             position: relative;
@@ -565,6 +596,8 @@
             user-select: none;
             -webkit-user-select: none;
             -webkit-touch-callout: none;
+            flex: 1;
+            z-index: 1;
         }
 
         .product::before {
@@ -759,28 +792,6 @@
             outline: none;
         }
 
-        .testimonials {
-            background: linear-gradient(135deg, #002244, #003366);
-            border-radius: 20px;
-            margin: 40px 0;
-            padding: 20px;
-            box-shadow: 0 0 30px rgba(0, 170, 255, 0.2);
-        }
-
-        .testimonial {
-            margin: 20px 0;
-            padding: 20px;
-            background: linear-gradient(145deg, #004488, #0055aa);
-            border-radius: 15px;
-            border: 1px solid #00aaff;
-            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .testimonial:hover {
-            transform: scale(1.02);
-        }
-
         footer {
             background: linear-gradient(45deg, #003366, #004488);
             padding: 30px 20px;
@@ -824,6 +835,11 @@
             left: 100%;
         }
 
+        @keyframes raysSpin {
+            0%   { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
         @keyframes glow {
             from { text-shadow: 0 0 20px #00aaff, 0 0 40px #00aaff, 0 0 60px #00aaff; }
             to { text-shadow: 0 0 30px #00aaff, 0 0 50px #00aaff, 0 0 80px #00aaff; }
@@ -843,11 +859,6 @@
             0%,
             100% { box-shadow: 0 0 18px rgba(102, 217, 255, 0.45), 0 0 35px rgba(0, 170, 255, 0.25); }
             50% { box-shadow: 0 0 28px rgba(102, 217, 255, 0.8), 0 0 55px rgba(0, 170, 255, 0.45); }
-        }
-
-        @keyframes raysSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
         @media (max-width: 768px) {
@@ -1507,18 +1518,6 @@
         <div id="adminComprobantes"><p>Cargando...</p></div>
     </section>
 
-    <section id="testimonios" class="testimonials">
-        <h2>TESTIMONIOS REALES</h2>
-        <div class="testimonial">
-            <p>"Excelente servicio!"</p>
-              <p>- Ronal IOS</p>
-        </div>
-        <div class="testimonial">
-            <p>"Muy recomendado."</p>
-            <p>- Delivis IOS</p>
-        </div>
-    </section>
-
     <section id="porque-elegirnos">
         <h2>POR QUÉ ELEGIRNOS</h2>
         <ul>
@@ -1599,5 +1598,13 @@
         </svg>
     </a>
 
+<script>
+    document.querySelectorAll('.products .product').forEach(function(card) {
+        var frame = document.createElement('div');
+        frame.className = 'product-frame';
+        card.parentNode.insertBefore(frame, card);
+        frame.appendChild(card);
+    });
+</script>
 </body>
 </html>
